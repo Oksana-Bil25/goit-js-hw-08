@@ -92,9 +92,21 @@ gallery.addEventListener('click', (e) => {
 
   const largeImage = target.dataset.source;
 
-  const instance = basicLightbox.create(`
-    <img src="${largeImage}" width="800" height="600" alt="${target.alt}">
-  `);
+ const instance = basicLightbox.create(
+  `<img src="${largeImage}" width="1112" height="640" alt="${target.alt}">`,
+  {
+    onShow: (instance) => {
+      document.addEventListener('keydown', onEscPress);
+      function onEscPress(e) {
+        if (e.key === 'Escape') {
+          instance.close();
+          document.removeEventListener('keydown', onEscPress);
+        }
+      }
+    }
+  }
+);
+
 
   instance.show();
 });
